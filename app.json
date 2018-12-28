@@ -1,0 +1,13 @@
+{
+  "pages":[
+    "pages/swipertab/swipertab",
+    "pages/authorize/authorize",
+    "pages/test/test"
+  ],
+  "window":{
+    "backgroundTextStyle":"light",
+    "navigationBarBackgroundColor": "#b9dcde",
+    "navigationBarTitleText": "环球房价",
+    "navigationBarTextStyle":"black"
+  }
+}

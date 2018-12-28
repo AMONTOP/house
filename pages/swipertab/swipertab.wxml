@@ -1,0 +1,134 @@
+<view class="container">
+  <view class="container-body">
+    <view class="tab">
+      <!--顶部导航-->
+      <view class="tab-nav">
+        <view style='width:33%;line-height:48rpx;text-align:center' wx:for="{{tabnav.tabitem}}" wx:key="{{item.type}}">
+          <image bindtap="setTab" class="{{showtab==index?'active':''}}" data-tabindex="{{index}}" data-type="{{item.type}}" src='{{item.img}}' style='width:115rpx;height:115rpx;margin-top:13rpx;' />
+          <text bindtap="setTab" class="{{showtab==index?'active':''}}" data-tabindex="{{index}}" data-type="{{item.type}}">{{item.text}}</text>
+        </view>
+        <view class="tab-line" style="width:33%;transform:translateX({{100*showtab}}%);"></view>
+      </view>
+      <view class='two-tab'>
+        <view class="inter {{currentTab==0?'actives':''}}" data-current="0" bindtap="clickTab">国际</view>
+        <view class="domes {{currentTab==1?'actives':''}}" data-current="1" bindtap="clickTab">国内</view>
+      </view>
+      <view class='update-time' style="position:relative;">
+        <view style="display:inline-block;float:left;margin-top:10px;margin-left:35px;">最近一次更新时间：{{time}}</view>
+        <image src='../../image/eye.png' style="width:36px;height:36px;display:inline-block;"/>
+        <view style="display:inline-block;position:absolute;top:9px;font-size:19px;margin-left:2px">{{count}}</view>
+    
+      </view>
+      
+      <view class='myconcern'>
+        <image src='../../image/concern.png' style='width:64rpx;height:64rpx;position:absolute;top:5rpx;left:7rpx;' />
+        <span>我的关注</span>
+        <block wx:if="{{concerncity.length == 0 && nameuser != null}}">
+          <view style='margin-top:63rpx;text-align:center;'>您还没添加城市关注!</view>
+        </block>
+        <block wx:if="{{nameuser == null}}">
+          <view style='margin-top:63rpx;text-align:center;position:relative;'>
+            <view style='display:inline-block;margin-bottom:13rpx;'>您还没登录！</view>
+            <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo" class='button_login'>登录</button>
+          </view>
+        </block>
+        <block wx:else>
+          
+          <block wx:if="{{concerncity == ''||null}}">
+            <view style='margin-top:20rpx;'>
+              <view class='concern-city' wx:for="{{concerncity}}" bindtap='changeToDetail' data-city="{{item}}">{{item}}</view>
+            </view>
+          </block>
+          <block wx:else>
+            <view style='margin-top:68rpx;'>
+              <view class='concern-city' wx:for="{{concerncity}}" bindtap='changeToDetail' data-city="{{item}}">{{item}}</view>
+            </view>
+          </block>
+          
+        </block>
+
+      </view>
+      <!--主要内容-->
+      <view class="tab-content" style="width: {{tabnav.tabnum*100}}%;transform:translateX(-{{showtab*100/tabnav.tabnum}}%);margin-left: {{marginleft}}px;">
+        <view class="tab-panel">
+          <view class="test-list">
+            <view class="table">
+              <view class="tr bg-w">
+                <view class="th">排名</view>
+                <view class="th">城市</view>
+                <view class="th ">房价收入比</view>
+              </view>
+              <block wx:for="{{testdata1}}">
+                <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+                  <view class="td">{{item.rank}}</view>
+                  <view class="td" data-city="{{item.city}}" bindtap="changeToDetail">{{item.city}}</view>
+                  <view class="td">{{item.income}}</view>
+                </view>
+                <view class="tr" wx:else>
+                  <view class="td">{{item.rank}}</view>
+                  <view class="td" bindtap="changeToDetail" data-city="{{item.city}}">{{item.city}}</view>
+                  <view class="td">{{item.income}}</view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+        <view class="tab-panel">
+          <view class="test-list">
+            <view class="table">
+              <view class="tr bg-w">
+                <view class="th">排名</view>
+                <view class="th">城市</view>
+                <view class="th ">市中心房价</view>
+              </view>
+              <block wx:for="{{testdata1}}">
+                <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+                  <view class="td">{{item.rank}}</view>
+                  <view class="td" bindtap="changeToDetail" data-city="{{item.center_city}}">{{item.center_city}}</view>
+                  <view class="td">
+                    <image style='width:30rpx;height:30rpx;' src='../../image/rmb.png' />
+                    <span>{{item.center}}</span>
+                  </view>
+                </view>
+                <view class="tr" wx:else>
+                  <view class="td">{{item.rank}}</view>
+                  <view class="td" bindtap="changeToDetail" data-city="{{item.center_city}}">{{item.center_city}}</view>
+                  <view class="td">
+                    <image style='width:30rpx;height:30rpx;' src='../../image/rmb.png' />{{item.center}}</view>
+                </view>
+              </block>
+            </view>
+          </view>
+        </view>
+        <view class="tab-panel">
+          <view class="test-list">
+            <view class="table">
+              <view class="tr bg-w">
+                <view class="th">排名</view>
+                <view class="th">城市</view>
+                <view class="th ">非市中心房价</view>
+              </view>
+              <block wx:for="{{testdata1}}">
+                <view class="tr bg-g" wx:if="{{index % 2 == 0}}">
+                  <view class="td">{{item.rank}}</view>
+                  <view class="td" bindtap="changeToDetail" data-city="{{item.outside_city}}">{{item.outside_city}}</view>
+                  <view class="td">
+                    <image style='width:30rpx;height:30rpx;' src='../../image/rmb.png' />{{item.outside}}</view>
+                </view>
+                <view class="tr" wx:else>
+                  <view class="td">{{item.rank}}</view>
+                  <view class="td" bindtap="changeToDetail" data-city="{{item.outside_city}}">{{item.outside_city}}</view>
+                  <view class="td">
+                    <image style='width:30rpx;height:30rpx;' src='../../image/rmb.png' />{{item.outside}}</view>
+                </view>
+              </block>
+            </view>
+          </view>
+          <view>
+          </view>
+        </view>
+      </view>
+      
+    </view>
+  </view>
+</view>

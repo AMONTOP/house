@@ -1,0 +1,59 @@
+/* pages/test/test.wxss */
+.container{
+  background: white;
+}
+.top{
+  background:white;
+  width:100%;
+  height:151rpx;
+  position:relative;
+  border-bottom:2px dotted #EEEEEE;
+  margin-bottom:44rpx;
+}
+.top-city{
+  font-size:40rpx;
+  color:#2092AC;
+  font-weight:500;
+  margin:10rpx;
+  display: inline-block;
+  margin-left:30rpx;
+}
+.top-time{
+  display:inline-block;
+  font-size:27rpx;
+  color:gray;
+  margin-left:14rpx;
+}
+.top-rank{
+  width:260rpx;
+  font-size:27rpx;
+  background:#D2EEFF;
+  text-align:center;
+  padding-top:4rpx;
+  padding-bottom:4rpx;
+  color:#2E648F;
+  margin-left:27rpx;
+}
+.top-concern{
+ width:152rpx;
+  height:70rpx;
+  text-align:center;
+  line-height:70rpx;
+  background:#1D96C1;
+  color:white;
+  font-size:30rpx;
+  border-radius:15rpx;
+  position:absolute;
+  top:35rpx;
+  right:38rpx;
+}
+.canvas2{
+   width: 100%;
+    height: 250px;
+    background: white;
+}
+.canvas{
+  width: 100%;
+  height: 250px;
+  background: white;
+}

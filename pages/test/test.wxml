@@ -1,0 +1,18 @@
+<view class="container">
+  <view class="top">
+    <view class='top-city'>{{city_name}}</view>
+    <view class='top-time'>最近更新:{{time}}</view>
+    <view class='top-rank'>城市关注排名:3</view>
+    <block wx:if="{{username == ' '||null}}">
+      <view></view>
+    </block>
+    <block wx:else>
+       <view class='top-concern' bindtap='changeConcern' style='background:{{color}}'>{{boolconcern}}</view>
+    </block>
+  </view>
+  <!-- <loading hidden="{{loadingHidden}}">
+     程序加载中...
+  </loading> -->
+    <canvas canvas-id="areaCanvas2" class="canvas2" bindtouchstart="touchHandler2"></canvas>
+    <canvas canvas-id="areaCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
+</view>
