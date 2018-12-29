@@ -19,14 +19,13 @@
         <view style="display:inline-block;position:absolute;top:9px;font-size:19px;margin-left:2px">{{count}}</view>
     
       </view>
-      
       <view class='myconcern'>
         <image src='../../image/concern.png' style='width:64rpx;height:64rpx;position:absolute;top:5rpx;left:7rpx;' />
         <span>我的关注</span>
-        <block wx:if="{{concerncity.length == 0 && nameuser != null}}">
+        <block wx:if="{{concerncity.length == 0 && nameuser != null&& nameuser != 'undefined' }}">
           <view style='margin-top:63rpx;text-align:center;'>您还没添加城市关注!</view>
         </block>
-        <block wx:if="{{nameuser == null}}">
+        <block wx:if="{{nameuser == null || nameuser.length == 0 || nameuser == 'undefined'}}">
           <view style='margin-top:63rpx;text-align:center;position:relative;'>
             <view style='display:inline-block;margin-bottom:13rpx;'>您还没登录！</view>
             <button open-type="getUserInfo" lang="zh_CN" bindgetuserinfo="bindGetUserInfo" class='button_login'>登录</button>

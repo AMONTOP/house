@@ -10,9 +10,9 @@
        <view class='top-concern' bindtap='changeConcern' style='background:{{color}}'>{{boolconcern}}</view>
     </block>
   </view>
-  <!-- <loading hidden="{{loadingHidden}}">
+ <loading hidden="{{loadingHidden}}">
      程序加载中...
-  </loading> -->
+  </loading> 
     <canvas canvas-id="areaCanvas2" class="canvas2" bindtouchstart="touchHandler2"></canvas>
     <canvas canvas-id="areaCanvas" class="canvas" bindtouchstart="touchHandler"></canvas>
 </view>

@@ -1,4 +1,5 @@
 var app = getApp();
+
 Page({
   data: {
     showtab:0,  //顶部选项卡索引
@@ -14,13 +15,13 @@ Page({
     marginleft:0,  //滑动距离
     concerncity:[],//关注的城市
     nameuser:null,
-  
   },
   onLoad: function (options) {
-    // console.log(options.name);
+    console.log(options);
     var timearr = [];
     var countarr = [];
-   wx.request({
+    var that = this;
+    wx.request({
      url: 'https://house.anandakeji.com/admin/api/statistics',
      success: function (res) {
        var json = res.data.data;
@@ -72,16 +73,16 @@ Page({
       currentTab: 0
     })
     this.fetchTabData(0);
-    //获取关注列表
-    var arr_concerns=[];
-    var that = this;
+    // this.getAttention(options);
+    var arr_concerns = [];
     wx.request({
       url: 'https://house.anandakeji.com/getAttentions',
-      method:'POST',
-      success(res){
-        // console.log(res.data);
-        for(var i=0;i<res.data.attentions.length;i++){
-          if (res.data.attentions[i].name == options.name){
+      method: 'POST',
+      success(res) {
+        console.log(res.data);
+        for (var i = 0; i < res.data.attentions.length; i++) {
+          if (res.data.attentions[i].name == options.name) {
+            console.log(res.data.attentions[i].city_name);
             arr_concerns.push(res.data.attentions[i].city_name);
           }
         }
@@ -92,11 +93,43 @@ Page({
         })
       }
     })
+   
   },
+ 
+  // onShow:function(){
+  //   let value  = wx.getStorageSync('name');
+  //   this.onLoad(value);
+  // },
   // loadConcern:function(){
 
   // },
-
+  // changeData:function(options){
+  //   console.log(options);
+  //   this.onLoad(options);
+  // },
+  getAttention:function(option){
+    var that = this;
+    var arr_concerns = [];
+    wx.request({
+      url: 'https://house.anandakeji.com/getAttentions',
+      method: 'POST',
+      success(res) {
+        console.log(res.data);
+        for (var i = 0; i < res.data.attentions.length; i++) {
+          if (res.data.attentions[i].name == option) {
+            console.log(res.data.attentions[i].city_name);
+            arr_concerns.push(res.data.attentions[i].city_name);
+          }
+        }
+        // console.log(arr_concerns);
+        that.setData({
+          concerncity: arr_concerns,
+          nameuser: option
+        })
+      }
+    })
+  },
+ 
   bindGetUserInfo: function (e) {
     var that = this;
     wx.showModal({
@@ -122,11 +155,11 @@ Page({
             url: 'https://house.anandakeji.com/getUsers',
             method: 'POST',
             success: function (res) {
-              console.log(res.data);
               var flag = true;
               for (var i = 0; i < res.data.users.length; i++) {
                 if (e.detail.userInfo.nickName == res.data.users[i].name) {
-                  //console.log(res.data.users[i].id);
+                  // console.log(res.data.users[i].name);
+                  
                   var ids = res.data.users[i].id;
                   flag = true;
                   wx.request({

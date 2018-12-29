@@ -1335,9 +1335,6 @@ function drawXAxis(categories, opts, config, context) {
         context.setFillStyle(opts.xAxis.fontColor || '#666666');
         categories.forEach(function (item, index) {
             var offset = eachSpacing / 2 - measureText(item) / 2;
-            console.log(item);
-          console.log(xAxisPoints[index] + offset);
-          console.log(startY + config.fontSize + 5)
             context.fillText(item, xAxisPoints[index] + offset, startY + config.fontSize + 5);
         });
         context.closePath();

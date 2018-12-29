@@ -26,12 +26,14 @@ Page({
 
   onLoad: function (e) {
     var that = this;
-    that.getBeforeDate().then(function (val) {
-      console.log('2');
-      return that.getAttention();
-    }).then(function (val) {
-      console.log('3');
-      return that.getDetail();
+    that.getBeforeDate().then(function () {
+      console.log("2");
+      console.log(e.city);
+      return that.getAttention(e);
+    }).then(function () {
+      console.log("3");
+      console.log(e.city);
+      return that.getDetail(e);
     })
     var windowWidth = 320;
     try {
@@ -40,7 +42,27 @@ Page({
     } catch (e) {
       console.error('getSystemInfoSync failed!');
     }
+    
   },
+  onUnload:function(){
+    console.log(wx.getStorageSync('name'));
+    wx.navigateTo({
+       url: '../swipertab/swipertab?name=' + wx.getStorageSync('name'),
+    })
+  },
+  // changeParentData:function(opt){
+  //   console.log("change");
+  //   var pages = getCurrentPages();
+  //   if(pages.length>1){
+  //     var beforePage = pages[pages.length-2];
+  //     beforePage.changeData(opt);
+  //   }
+  // },
+  // navigateBack() {
+  //   console.log(this.data.)
+  //   wx.setStorage('name',)
+  //   wx.navigateBack()
+  // },
   getBeforeDate: function () {
     var timearr = [];
     var that = this;
@@ -60,7 +82,7 @@ Page({
             time1: timearr[0],
             time: timearr[3]
           })
-          resolve(res);
+          resolve();
         },
         fail: function () {
           console.log("error");
@@ -78,6 +100,8 @@ Page({
       url: 'https://house.anandakeji.com/getAttentions',
       method: 'POST',
       success(res) {
+
+        wx.setStorageSync('name', e.name);
         // console.log(res.data.attentions);
         for (var m = 0; m < res.data.attentions.length; m++) {
           if (e.name == res.data.attentions[m].name && e.city == res.data.attentions[m].city_name) {
@@ -95,13 +119,14 @@ Page({
           cityname: e.city,
           username: e.name
         })
-        resolve(res);
+      
       }
     })
   },
 
   getDetail: function (e) {
     //获取页面详情
+    var arr = [];
     var that = this;
     wx.request({
       url: 'https://house.anandakeji.com/getDetails',
@@ -132,6 +157,14 @@ Page({
           outside4: arr[0].outside4,
           loadingHidden: true
         })
+        var windowWidth = 320;
+        try {
+          var res = wx.getSystemInfoSync();
+          windowWidth = res.windowWidth;
+        } catch (e) {
+          console.error('getSystemInfoSync failed!');
+        }
+        console.log(that.data)
         areaChart2 = new wxCharts({
           canvasId: 'areaCanvas2',
           type: 'area',
@@ -206,7 +239,7 @@ Page({
           height: 250,
           dataLabel: false
         });
-        resolve(res);
+        
       }
     });
   },
@@ -217,18 +250,22 @@ Page({
   touchHandler2: function (e) {
     areaChart2.showToolTip(e);
   },
+  
   changeConcern: function (e) {
     var pages = getCurrentPages();
     var currPage = pages[pages.length - 1];
     var prevPage = pages[pages.length - 2];
     // console.log(this.data.cityname);
     var that = this;
+    var nameval = that.data.username;
+    var citynameval = that.data.cityname;
+    console.log(that.data.username);
     if (this.data.boolconcern == "取消关注") {
       wx.request({
         url: 'https://house.anandakeji.com/delAttention',
         data: {
-          name: that.data.username,
-          city_name: that.data.cityname
+          name: nameval,
+          city_name: citynameval
         },
         method: "POST",
         success(res) {
@@ -259,8 +296,8 @@ Page({
       wx.request({
         url: 'https://house.anandakeji.com/addAttention',
         data: {
-          name: that.data.username,
-          city_name: that.data.cityname
+          name: nameval,
+          city_name: citynameval
         },
         method: "POST",
         success(res) {
