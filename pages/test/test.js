@@ -44,12 +44,12 @@ Page({
     }
     
   },
-  onUnload:function(){
-    console.log(wx.getStorageSync('name'));
-    wx.navigateTo({
-       url: '../swipertab/swipertab?name=' + wx.getStorageSync('name'),
-    })
-  },
+  // onUnload:function(){
+  //   console.log(wx.getStorageSync('name'));
+  //   wx.navigateTo({
+  //      url: '../swipertab/swipertab?name=' + wx.getStorageSync('name'),
+  //   })
+  // },
   // changeParentData:function(opt){
   //   console.log("change");
   //   var pages = getCurrentPages();
@@ -101,7 +101,7 @@ Page({
       method: 'POST',
       success(res) {
 
-        wx.setStorageSync('name', e.name);
+        // wx.setStorageSync('name', e.name);
         // console.log(res.data.attentions);
         for (var m = 0; m < res.data.attentions.length; m++) {
           if (e.name == res.data.attentions[m].name && e.city == res.data.attentions[m].city_name) {

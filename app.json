@@ -1,7 +1,6 @@
 {
   "pages":[
     "pages/swipertab/swipertab",
-    "pages/authorize/authorize",
     "pages/test/test"
   ],
   "window":{

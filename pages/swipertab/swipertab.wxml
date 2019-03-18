@@ -14,9 +14,9 @@
         <view class="domes {{currentTab==1?'actives':''}}" data-current="1" bindtap="clickTab">国内</view>
       </view>
       <view class='update-time' style="position:relative;">
-        <view style="display:inline-block;float:left;margin-top:10px;margin-left:35px;">最近一次更新时间：{{time}}</view>
-        <image src='../../image/eye.png' style="width:36px;height:36px;display:inline-block;"/>
-        <view style="display:inline-block;position:absolute;top:9px;font-size:19px;margin-left:2px">{{count}}</view>
+        <view style="display:inline-block;float:left;margin-top:5px;margin-left:35px;">最近一次更新时间：{{time}}</view>
+        <image src='../../image/eye.png' style="width:28px;height:28px;display:inline-block;"/>
+        <view style="display:inline-block;position:absolute;top:6px;font-size:17px;margin-left:2px">{{count}}</view>
     
       </view>
       <view class='myconcern'>

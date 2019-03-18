@@ -16,10 +16,78 @@ Page({
     concerncity:[],//关注的城市
     nameuser:null,
   },
+  onShow: function (){
+     
+  //   var that = this;
+  //   console.log("onshow");
+  //   wx.request({
+  //     url: 'https://house.anandakeji.com/addOperateLog',
+  //     method: 'POST',
+  //     data: { uid: 1, operate: "authorize", project: "fang" },
+  //     success: function (res) {
+  //       console.log(res);
+  //       wx.request({
+  //         url: 'https://house.anandakeji.com/getTotal',
+  //         method: 'POST',
+  //         data: { "project": "fang" },
+  //         success: function (res1) {
+  //           that.setData({
+  //             count: res1.data.total + 345
+  //           })
+  //         }
+  //       });
+  //     }
+  //   })
+  //   wx.getStorage({
+  //     key: 'name',
+  //     success: function(res) {
+  //       console.log(res.data.name);
+  //       // that.onLoad(res.data);
+  //     },
+  //   })
+  },
   onLoad: function (options) {
-    console.log(options);
+    var arr_concerns = [];
+    wx.request({
+      url: 'https://house.anandakeji.com/getAttentions',
+      method: 'POST',
+      success(res) {
+        for (var i = 0; i < res.data.attentions.length; i++) {
+          if (res.data.attentions[i].name == options.name) {
+            console.log(res.data.attentions[i].city_name);
+            arr_concerns.push(res.data.attentions[i].city_name);
+          }
+        }
+        // console.log(arr_concerns);
+        that.setData({
+          concerncity: arr_concerns,
+          nameuser: options.name
+        })
+      }
+    })
+    wx.request({
+      url: 'https://house.anandakeji.com/addOperateLog',
+      method: 'POST',
+      data: { uid: 1, operate: "authorize", project: "fang" },
+      success: function (res) {
+        console.log(res);
+        wx.request({
+          url: 'https://house.anandakeji.com/getTotal',
+          method: 'POST',
+          data: { "project": "fang" },
+          success: function (res1) {
+            that.setData({
+              count: res1.data.total + 345
+            })
+          }
+        });
+      }
+    })
+    wx.setStorage({
+      key: 'name',
+      data: options,
+    })
     var timearr = [];
-    var countarr = [];
     var that = this;
     wx.request({
      url: 'https://house.anandakeji.com/admin/api/statistics',
@@ -27,22 +95,10 @@ Page({
        var json = res.data.data;
        for (var key in json) {
          timearr.push(key);
-         countarr.push(json[key]);
        }
-       
-    //  var gw = parseInt(countarr[2]%10);
-    //  var sw = parseInt((countarr[2] % 100) / 10);
-    //  var bw = parseInt((countarr[2] % 1000) / 100);
-    //  var qw = parseInt((countarr[2] % 10000) / 1000);
-    //  console.log(gw);
-    //  console.log(sw);
+   
       that.setData({
-        time: timearr[3],
-        count:countarr[2]
-        // gw:gw,
-        // sw:sw,
-        // bw:bw,
-        // qw:qw,
+        time: timearr[3]
       })
      }
    })
@@ -74,25 +130,7 @@ Page({
     })
     this.fetchTabData(0);
     // this.getAttention(options);
-    var arr_concerns = [];
-    wx.request({
-      url: 'https://house.anandakeji.com/getAttentions',
-      method: 'POST',
-      success(res) {
-        console.log(res.data);
-        for (var i = 0; i < res.data.attentions.length; i++) {
-          if (res.data.attentions[i].name == options.name) {
-            console.log(res.data.attentions[i].city_name);
-            arr_concerns.push(res.data.attentions[i].city_name);
-          }
-        }
-        // console.log(arr_concerns);
-        that.setData({
-          concerncity: arr_concerns,
-          nameuser: options.name
-        })
-      }
-    })
+    //aaaaaaaaa
    
   },
  
@@ -162,14 +200,14 @@ Page({
                   
                   var ids = res.data.users[i].id;
                   flag = true;
-                  wx.request({
-                    url: 'https://house.anandakeji.com/addOperateLog',
-                    method: 'POST',
-                    data: { uid: ids, page_name: "authorize" },
-                    success: function (res) {
-                      console.log(res)
-                    }
-                  })
+                  // wx.request({
+                  //   url: 'https://house.anandakeji.com/addOperateLog',
+                  //   method: 'POST',
+                  //   data: { uid: ids, operate: "authorize",project:"fang" },
+                  //   success: function (res) {
+                  //     console.log(res)
+                  //   }
+                  // })
                 } else {
                   flag = false;
                 }
