@@ -17,34 +17,52 @@ Page({
     nameuser:null,
   },
   onShow: function (){
-     
-  //   var that = this;
-  //   console.log("onshow");
-  //   wx.request({
-  //     url: 'https://house.anandakeji.com/addOperateLog',
-  //     method: 'POST',
-  //     data: { uid: 1, operate: "authorize", project: "fang" },
-  //     success: function (res) {
-  //       console.log(res);
-  //       wx.request({
-  //         url: 'https://house.anandakeji.com/getTotal',
-  //         method: 'POST',
-  //         data: { "project": "fang" },
-  //         success: function (res1) {
-  //           that.setData({
-  //             count: res1.data.total + 345
-  //           })
-  //         }
-  //       });
-  //     }
-  //   })
-  //   wx.getStorage({
-  //     key: 'name',
-  //     success: function(res) {
-  //       console.log(res.data.name);
-  //       // that.onLoad(res.data);
-  //     },
-  //   })
+    var that = this;
+    wx.getStorage({
+      key: 'fangwen',
+      success: function(res) {
+        if (res.data == "true"){
+          console.log("true");
+          wx.request({
+            url: 'https://house.anandakeji.com/addOperateLog',
+            method: 'POST',
+            data: { uid: 1, operate: "authorize", project: "fang" },
+            success: function (res) {
+              console.log(res);
+              wx.request({
+                url: 'https://house.anandakeji.com/getTotal',
+                method: 'POST',
+                data: { "project": "fang" },
+                success: function (res1) {
+                  that.setData({
+                    count: res1.data.total + 345
+                  })
+                }
+              });
+            }
+          })
+        }else{
+          console.log("false");
+          wx.request({
+            url: 'https://house.anandakeji.com/getTotal',
+            method: 'POST',
+            data: { "project": "fang" },
+            success: function (res1) {
+              that.setData({
+                count: res1.data.total + 345
+              })
+            }
+          });
+        }
+      },
+    })
+    wx.getStorage({
+      key: 'name',
+      success: function(res) {
+        console.log(res.data.name);
+        that.onLoad(res.data);
+      },
+    })
   },
   onLoad: function (options) {
     var arr_concerns = [];
@@ -65,24 +83,7 @@ Page({
         })
       }
     })
-    wx.request({
-      url: 'https://house.anandakeji.com/addOperateLog',
-      method: 'POST',
-      data: { uid: 1, operate: "authorize", project: "fang" },
-      success: function (res) {
-        console.log(res);
-        wx.request({
-          url: 'https://house.anandakeji.com/getTotal',
-          method: 'POST',
-          data: { "project": "fang" },
-          success: function (res1) {
-            that.setData({
-              count: res1.data.total + 345
-            })
-          }
-        });
-      }
-    })
+   
     wx.setStorage({
       key: 'name',
       data: options,

@@ -15,7 +15,10 @@ App({
          wx.setStorageSync("time",timearr);
       }
     })
-
+    wx.setStorage({
+      key: 'fangwen',
+      data: 'true',
+    })
     // 展示本地存储能力
     var logs = wx.getStorageSync('logs') || []
     logs.unshift(Date.now())

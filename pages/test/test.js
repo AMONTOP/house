@@ -25,6 +25,10 @@ Page({
   },
 
   onLoad: function (e) {
+    wx.setStorage({
+      key: 'fangwen',
+      data: 'false',
+    });
     var that = this;
     that.getBeforeDate().then(function () {
       console.log("2");
